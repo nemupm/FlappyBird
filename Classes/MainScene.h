@@ -1,7 +1,9 @@
-#ifndef __MAINSCENE_SCENE_H__
-#define __MAINSCENE_SCENE_H__
+#ifndef __MainScene_SCENE_H__
+#define __MainScene_SCENE_H__
 
 #include "cocos2d.h"
+
+class Character;
 
 class MainScene : public cocos2d::Layer
 {
@@ -11,9 +13,16 @@ public:
 
     // Here's a difference. Method 'init' in cocos2d-x returns bool, instead of returning 'id' in cocos2d-iphone
     virtual bool init();
+    
+    void onEnter() override;
+    void setupTouchHandling();
 
     // implement the "static create()" method manually
     CREATE_FUNC(MainScene);
+    
+private:
+    Character* character;
+
 };
 
-#endif // __MAINSCENE_SCENE_H__
+#endif // __MainScene_SCENE_H__
