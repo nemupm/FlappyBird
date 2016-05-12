@@ -18,6 +18,7 @@ public:
     bool init() override;
     
     void moveLeft(float distance);
+    std::vector<cocos2d::Rect>  getRects();
 
 protected:
     cocostudio::timeline::ActionTimeline* timeline;

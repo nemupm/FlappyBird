@@ -42,3 +42,23 @@ void Obstacle::moveLeft(float distance)
 {
     this->setPosition(this->getPosition() + Vec2(-distance, 0));
 }
+
+std::vector<Rect> Obstacle::getRects()
+{
+    std::vector<Rect> rects;
+    
+    auto pipeTop = this->getChildByName<Sprite*>("pipe_top");
+    Vec2 pipeTopAnchorPoint = pipeTop->getPosition() + this->getPosition();
+    Size pipeTopSize = pipeTop->getContentSize();
+    Vec2 pipeTopOriginPoint = Vec2(pipeTopAnchorPoint.x - pipeTopSize.width / 2, pipeTopAnchorPoint.y);
+    rects.push_back(Rect(pipeTopOriginPoint.x, pipeTopOriginPoint.y, pipeTopSize.width, pipeTopSize.height));
+    
+    auto pipeBottom = this->getChildByName<Sprite*>("pipe_bottom");
+    Vec2 pipeBottomAnchorPoint = pipeBottom->getPosition() + this->getPosition();
+    Size pipeBottomSize = pipeBottom->getContentSize();
+    Vec2 pipeBottomOriginPoint = Vec2(pipeBottomAnchorPoint.x - pipeBottomSize.width / 2, pipeBottomAnchorPoint.y - pipeBottomSize.height);
+    Rect rectBottom = Rect(pipeBottomOriginPoint.x, pipeBottomOriginPoint.y ,pipeBottomSize.width, pipeBottomSize.height);
+    rects.push_back(rectBottom);
+    
+    return rects;
+}

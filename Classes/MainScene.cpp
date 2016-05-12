@@ -78,8 +78,24 @@ void MainScene::setupTouchHandling()
 
 void MainScene::update(float dt)
 {
+    // Move Obstacles
     for (auto obstacle : this->obstacles) {
         obstacle->moveLeft(SCROLL_SPEED_X * dt);
+    }
+    
+    // Collision detection between Obstacles and Character
+    Rect characterRect = this->character->getRect();
+    for (auto obstacle : this->obstacles){
+        auto obstacleRects = obstacle->getRects();
+        for (Rect obstacleRect : obstacleRects) {
+            bool hit = characterRect.intersectsRect(obstacleRect);
+            if(hit){
+                CCLOG("hit");
+                this->unscheduleAllCallbacks();
+            }else{
+                CCLOG("no hit");
+            }
+        }
     }
 }
 
@@ -96,14 +112,3 @@ void MainScene::createObstacle(float dt)
         this->obstacles.erase(this->obstacles.begin());
     }
 }
-
-//void HelloWorld::play(Ref* pSender, ui::Widget::TouchEventType type)
-//{
-//    
-//}
-
-//void HelloWorld::pause(Ref* pSender, ui::Widget::TouchEventType type)
-//{
-//    
-//}
-
