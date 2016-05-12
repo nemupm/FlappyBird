@@ -9,13 +9,24 @@
           <AbstractNodeData Name="back" ActionTag="448726433" Tag="41" IconVisible="False" PositionPercentXEnabled="True" PositionPercentYEnabled="True" ctype="SpriteObjectData">
             <Size X="288.0000" Y="512.0000" />
             <Children>
-              <AbstractNodeData Name="ground" ActionTag="539058104" Tag="46" IconVisible="False" RightMargin="-48.0000" TopMargin="402.0000" BottomMargin="-2.0000" ctype="SpriteObjectData">
+              <AbstractNodeData Name="ground1" ActionTag="539058104" Tag="46" IconVisible="False" RightMargin="-48.0000" TopMargin="402.0000" BottomMargin="-2.0000" ctype="SpriteObjectData">
                 <Size X="336.0000" Y="112.0000" />
                 <AnchorPoint ScaleY="1.0000" />
                 <Position Y="110.0000" />
                 <Scale ScaleX="1.0000" ScaleY="1.0000" />
                 <CColor A="255" R="255" G="255" B="255" />
                 <PrePosition Y="0.2148" />
+                <PreSize X="1.1667" Y="0.2188" />
+                <FileData Type="Normal" Path="Assets/stage/ground.png" Plist="" />
+                <BlendFunc Src="1" Dst="771" />
+              </AbstractNodeData>
+              <AbstractNodeData Name="ground2" ActionTag="-507211857" Tag="7" IconVisible="False" LeftMargin="288.0000" RightMargin="-336.0000" TopMargin="402.0000" BottomMargin="-2.0000" ctype="SpriteObjectData">
+                <Size X="336.0000" Y="112.0000" />
+                <AnchorPoint ScaleY="1.0000" />
+                <Position X="288.0000" Y="110.0000" />
+                <Scale ScaleX="1.0000" ScaleY="1.0000" />
+                <CColor A="255" R="255" G="255" B="255" />
+                <PrePosition X="1.0000" Y="0.2148" />
                 <PreSize X="1.1667" Y="0.2188" />
                 <FileData Type="Normal" Path="Assets/stage/ground.png" Plist="" />
                 <BlendFunc Src="1" Dst="771" />

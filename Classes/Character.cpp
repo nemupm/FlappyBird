@@ -19,31 +19,58 @@ bool Character::init()
     this->timeline = CSLoader::createTimeline("Character.csb");
     this->timeline->retain();
     this->velocity = 0;
-    this->accel = GRAVITY_ACCEL;
     
     return true;
 }
 
 void Character::onEnter(){
     Node::onEnter();
-    this->scheduleUpdate();
 }
 
 void Character::update(float dt){
-    this->velocity += accel * dt;
+    if (this->velocity > 0) {
+        this->velocity += GRAVITY_ACCEL_WHEN_UP * dt;
+    }else if(this->velocity > -300){
+        this->velocity += GRAVITY_ACCEL_WHEN_DOWN * dt;
+    }
     this->setPosition(this->getPosition() + Vec2(0, this->velocity * dt));
 }
 
 void Character::jump()
 {
+    this->stopAllActions();
     this->velocity = JUMP_SPEED;
+    this->runAction(this->timeline);
+    this->timeline->play("fly", false);
 }
 
 Rect Character::getRect()
 {
     auto bird = this->getChildByName<Sprite*>("bird");
-    Vec2 birdAnchorPoint = bird->getPosition() + this->getPosition();
-    Size birdSize = bird->getContentSize();
-    Vec2 originPoint = Vec2(birdAnchorPoint.x - birdSize.width / 2, birdAnchorPoint.y - birdSize.height / 2);
+    Vec2 birdAnchorPosition = bird->getPosition() + this->getPosition();
+    Size birdSize = bird->getContentSize() * 0.8f;
+    Vec2 originPoint = Vec2(birdAnchorPosition.x - birdSize.width / 2, birdAnchorPosition.y - birdSize.height / 2);
     return Rect(originPoint, birdSize);
+}
+
+void Character::setIsFlying(bool isFlying)
+{
+    this->isFlying = isFlying;
+}
+
+bool Character::getIsFlying(){
+    return this->isFlying;
+}
+
+void Character::startFly()
+{
+    this->setIsFlying(true);
+    this->scheduleUpdate();
+    this->velocity = JUMP_SPEED;
+}
+
+void Character::stopFly()
+{
+    this->setIsFlying(false);
+    this->unscheduleUpdate();
 }

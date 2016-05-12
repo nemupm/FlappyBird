@@ -21,9 +21,14 @@ public:
     void jump();
     cocos2d::Rect getRect();
     
+    void setIsFlying(bool isFlying);
+    bool getIsFlying();
+    void startFly();
+    void stopFly();
+    
 protected:
     cocostudio::timeline::ActionTimeline* timeline;
     float velocity;
-    float accel;
+    bool isFlying;
 };
 #endif /* Character_hpp */

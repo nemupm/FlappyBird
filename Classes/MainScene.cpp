@@ -50,10 +50,16 @@ bool MainScene::init()
     this->background = rootNode->getChildByName<cocos2d::Sprite*>("back");
     this->character = this->background->getChildByName<Character*>("Character");
     this->character->setLocalZOrder(1);
-    auto ground = this->background->getChildByName("ground");
-    ground->setLocalZOrder(1);
+    auto ground1 = this->background->getChildByName("ground1");
+    ground1->setLocalZOrder(1);
+    auto ground2 = this->background->getChildByName("ground2");
+    ground2->setLocalZOrder(1);
+    grounds.pushBack(ground1);
+    grounds.pushBack(ground2);
     
     addChild(rootNode);
+    
+    this->triggerReady();
 
     return true;
 }
@@ -63,14 +69,24 @@ void MainScene::onEnter()
     Layer::onEnter();
     this->setupTouchHandling();
     this->scheduleUpdate();
-    this->schedule(CC_SCHEDULE_SELECTOR(MainScene::createObstacle), OBSTACLE_TIME_SPAN);
 }
 
 void MainScene::setupTouchHandling()
 {
     auto touchListener = EventListenerTouchOneByOne::create();
     touchListener->onTouchBegan = [&](Touch* touch, Event* event){
-        this->character->jump();
+        switch (this->state) {
+            case State::Ready:
+                this->triggerPlaying();
+            case State::Playing:
+                this->character->jump();
+                break;
+            case State::GameOver:
+                auto nextGameScene = MainScene::createScene();
+                auto transition = TransitionFade::create(1.0, nextGameScene);
+                Director::getInstance()->replaceScene(transition);
+                break;
+        }
         return true;
     };
     this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(touchListener, this);
@@ -78,6 +94,23 @@ void MainScene::setupTouchHandling()
 
 void MainScene::update(float dt)
 {
+    if (this->state != State::Playing) {
+        return;
+    }
+    
+    // Move Grounds
+    for (auto ground : this->grounds) {
+        ground->setPositionX(ground->getPositionX() - SCROLL_SPEED_X * dt);
+    }
+    // If right ground's positionX reach display's left side, left ground is to be set to right.
+    if(this->grounds.back()->getPositionX() < 0)
+    {
+        auto ground = this->grounds.front();
+        ground->setPositionX(this->grounds.back()->getPositionX() + 288.0f);
+        this->grounds.erase(this->grounds.begin());
+        this->grounds.pushBack(ground);
+    }
+    
     // Move Obstacles
     for (auto obstacle : this->obstacles) {
         obstacle->moveLeft(SCROLL_SPEED_X * dt);
@@ -91,10 +124,23 @@ void MainScene::update(float dt)
             bool hit = characterRect.intersectsRect(obstacleRect);
             if(hit){
                 CCLOG("hit");
-                this->unscheduleAllCallbacks();
+                this->triggerGameOver();
             }else{
                 CCLOG("no hit");
             }
+        }
+    }
+    
+    // Collision detection between Grounds and Character
+    for (auto ground : this->grounds) {
+        Rect groundRect = ground->getBoundingBox();
+        Rect characterRect = this->character->getRect();
+        bool hit = characterRect.intersectsRect(groundRect);
+        if(hit){
+            CCLOG("hit");
+                this->triggerGameOver();
+        }else{
+            CCLOG("no hit");
         }
     }
 }
@@ -111,4 +157,23 @@ void MainScene::createObstacle(float dt)
         this->obstacles.front()->removeFromParent();
         this->obstacles.erase(this->obstacles.begin());
     }
+}
+
+void MainScene::triggerReady()
+{
+    this->state = State::Ready;
+    this->character->stopFly();
+}
+
+void MainScene::triggerPlaying()
+{
+    this->state = State::Playing;
+    this->character->startFly();
+    this->schedule(CC_SCHEDULE_SELECTOR(MainScene::createObstacle), OBSTACLE_TIME_SPAN);
+}
+
+void MainScene::triggerGameOver()
+{
+    this->state = State::GameOver;
+    this->unschedule(CC_SCHEDULE_SELECTOR(MainScene::createObstacle));
 }

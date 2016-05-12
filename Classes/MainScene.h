@@ -6,6 +6,7 @@
 
 class Character;
 #include "Obstacle.h"
+#include "Constants.h"
 
 class MainScene : public cocos2d::Layer
 {
@@ -19,6 +20,10 @@ public:
     void onEnter() override;
     void setupTouchHandling();
     void update(float dt) override;
+    
+    void triggerReady();
+    void triggerPlaying();
+    void triggerGameOver();
 
     // implement the "static create()" method manually
     CREATE_FUNC(MainScene);
@@ -27,7 +32,10 @@ private:
     Character* character;
     cocos2d::Vector<Obstacle*> obstacles;
     cocos2d::Node* background;
+    cocos2d::Vector<cocos2d::Node*> grounds;
     void createObstacle(float dt);
+    
+    State state;
 };
 
 #endif // __MainScene_SCENE_H__
