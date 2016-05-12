@@ -94,6 +94,20 @@ void MainScene::setupTouchHandling()
 
 void MainScene::update(float dt)
 {
+    // Collision detection between Grounds and Character
+    for (auto ground : this->grounds) {
+        Rect groundRect = ground->getBoundingBox();
+        Rect characterRect = this->character->getRect();
+        bool hit = characterRect.intersectsRect(groundRect);
+        if(hit){
+            CCLOG("hit");
+            this->triggerGameOver();
+            this->character->stopFly();
+        }else{
+            CCLOG("no hit");
+        }
+    }
+    
     if (this->state != State::Playing) {
         return;
     }
@@ -128,19 +142,6 @@ void MainScene::update(float dt)
             }else{
                 CCLOG("no hit");
             }
-        }
-    }
-    
-    // Collision detection between Grounds and Character
-    for (auto ground : this->grounds) {
-        Rect groundRect = ground->getBoundingBox();
-        Rect characterRect = this->character->getRect();
-        bool hit = characterRect.intersectsRect(groundRect);
-        if(hit){
-            CCLOG("hit");
-                this->triggerGameOver();
-        }else{
-            CCLOG("no hit");
         }
     }
 }
