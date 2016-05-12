@@ -2,8 +2,10 @@
 #define __MainScene_SCENE_H__
 
 #include "cocos2d.h"
+#include "Obstacle.h"
 
 class Character;
+#include "Obstacle.h"
 
 class MainScene : public cocos2d::Layer
 {
@@ -16,13 +18,16 @@ public:
     
     void onEnter() override;
     void setupTouchHandling();
+    void update(float dt) override;
 
     // implement the "static create()" method manually
     CREATE_FUNC(MainScene);
     
 private:
     Character* character;
-
+    cocos2d::Vector<Obstacle*> obstacles;
+    cocos2d::Node* background;
+    void createObstacle(float dt);
 };
 
 #endif // __MainScene_SCENE_H__

@@ -13,6 +13,8 @@
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
 		2A88E5011CE33CFC00D3D500 /* Character.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2A88E4FD1CE33CFC00D3D500 /* Character.cpp */; };
 		2A88E5021CE33CFC00D3D500 /* CharacterReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2A88E4FF1CE33CFC00D3D500 /* CharacterReader.cpp */; };
+		2AA0ED0C1CE4125D00385954 /* Obstacle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2AA0ED081CE4125D00385954 /* Obstacle.cpp */; };
+		2AA0ED0D1CE4125D00385954 /* ObstacleReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2AA0ED0A1CE4125D00385954 /* ObstacleReader.cpp */; };
 		2D8E4310A2E154128CD9AB6F /* libcocos2d Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 51554DA9A2FA70F46AF9E679 /* libcocos2d Mac.a */; };
 		46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46880B8419C43A87006E1F66 /* AppDelegate.cpp */; };
 		46880B8919C43A87006E1F66 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46880B8419C43A87006E1F66 /* AppDelegate.cpp */; };
@@ -76,6 +78,11 @@
 		2A88E4FF1CE33CFC00D3D500 /* CharacterReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CharacterReader.cpp; sourceTree = "<group>"; };
 		2A88E5031CE33EE900D3D500 /* Character.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Character.hpp; sourceTree = "<group>"; };
 		2A88E5041CE33EF000D3D500 /* CharacterReader.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = CharacterReader.hpp; sourceTree = "<group>"; };
+		2AA0ED071CE40EEB00385954 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		2AA0ED081CE4125D00385954 /* Obstacle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Obstacle.cpp; sourceTree = "<group>"; };
+		2AA0ED091CE4125D00385954 /* Obstacle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Obstacle.h; sourceTree = "<group>"; };
+		2AA0ED0A1CE4125D00385954 /* ObstacleReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObstacleReader.cpp; sourceTree = "<group>"; };
+		2AA0ED0B1CE4125D00385954 /* ObstacleReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObstacleReader.h; sourceTree = "<group>"; };
 		46880B8419C43A87006E1F66 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
 		46880B8519C43A87006E1F66 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		46880B8619C43A87006E1F66 /* MainScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MainScene.cpp; sourceTree = "<group>"; };
@@ -257,6 +264,11 @@
 				2A88E5031CE33EE900D3D500 /* Character.hpp */,
 				2A88E4FF1CE33CFC00D3D500 /* CharacterReader.cpp */,
 				2A88E5041CE33EF000D3D500 /* CharacterReader.hpp */,
+				2AA0ED071CE40EEB00385954 /* Constants.h */,
+				2AA0ED081CE4125D00385954 /* Obstacle.cpp */,
+				2AA0ED091CE4125D00385954 /* Obstacle.h */,
+				2AA0ED0A1CE4125D00385954 /* ObstacleReader.cpp */,
+				2AA0ED0B1CE4125D00385954 /* ObstacleReader.h */,
 			);
 			name = Classes;
 			path = ../Classes;
@@ -434,7 +446,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				2A88E5021CE33CFC00D3D500 /* CharacterReader.cpp in Sources */,
+				2AA0ED0D1CE4125D00385954 /* ObstacleReader.cpp in Sources */,
 				46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */,
+				2AA0ED0C1CE4125D00385954 /* Obstacle.cpp in Sources */,
 				46880B8A19C43A87006E1F66 /* MainScene.cpp in Sources */,
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
 				2A88E5011CE33CFC00D3D500 /* Character.cpp in Sources */,

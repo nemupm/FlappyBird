@@ -4,6 +4,9 @@
 
 #include "CharacterReader.hpp"
 #include "Character.hpp"
+#include "Obstacle.h"
+#include "ObstacleReader.h"
+#include "Constants.h"
 
 USING_NS_CC;
 
@@ -36,6 +39,7 @@ bool MainScene::init()
     
     CSLoader* instance = CSLoader::getInstance();
     instance->registReaderObject("CharacterReader", (ObjectFactory::Instance) CharacterReader::getInstance);
+    instance->registReaderObject("ObstacleReader", (ObjectFactory::Instance) ObstacleReader::getInstance);
 
     auto rootNode = CSLoader::createNode("MainScene.csb");
 
@@ -43,19 +47,23 @@ bool MainScene::init()
     rootNode->setContentSize(size);
     ui::Helper::doLayout(rootNode);
     
-    auto back = rootNode->getChildByName<cocos2d::Sprite*>("back");
-    this->character = back->getChildByName<Character*>("Character");
+    this->background = rootNode->getChildByName<cocos2d::Sprite*>("back");
+    this->character = this->background->getChildByName<Character*>("Character");
+    this->character->setLocalZOrder(1);
+    auto ground = this->background->getChildByName("ground");
+    ground->setLocalZOrder(1);
     
     addChild(rootNode);
 
     return true;
 }
 
-
 void MainScene::onEnter()
 {
     Layer::onEnter();
     this->setupTouchHandling();
+    this->scheduleUpdate();
+    this->schedule(CC_SCHEDULE_SELECTOR(MainScene::createObstacle), OBSTACLE_TIME_SPAN);
 }
 
 void MainScene::setupTouchHandling()
@@ -67,3 +75,35 @@ void MainScene::setupTouchHandling()
     };
     this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(touchListener, this);
 }
+
+void MainScene::update(float dt)
+{
+    for (auto obstacle : this->obstacles) {
+        obstacle->moveLeft(SCROLL_SPEED_X * dt);
+    }
+}
+
+void MainScene::createObstacle(float dt)
+{
+    auto obstacle = dynamic_cast<Obstacle*>(CSLoader::createNode("Obstacle.csb"));
+    this->obstacles.pushBack(obstacle);
+    this->background->addChild(obstacle);
+    float positionY = OBSTACLE_MIN_Y + CCRANDOM_0_1() * (OBSTACLE_MAX_Y - OBSTACLE_MIN_Y);
+    obstacle->setPosition(OBSTACLE_INIT_X, positionY);
+    
+    if (this->obstacles.size() > OBStACLE_LIMIT) {
+        this->obstacles.front()->removeFromParent();
+        this->obstacles.erase(this->obstacles.begin());
+    }
+}
+
+//void HelloWorld::play(Ref* pSender, ui::Widget::TouchEventType type)
+//{
+//    
+//}
+
+//void HelloWorld::pause(Ref* pSender, ui::Widget::TouchEventType type)
+//{
+//    
+//}
+
